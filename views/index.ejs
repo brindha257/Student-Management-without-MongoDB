@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Student Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-blue-600 p-6 text-white text-center">
+      <h1 class="text-3xl font-bold">Student Management Portal</h1>
+      <p class="text-sm mt-2">Manage Students Data Easily</p>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-grow p-8">
+      <!-- Form to Search Student -->
+      <section class="max-w-3xl mx-auto mb-10">
+        <form action="/search-student" method="GET" class="flex gap-4">
+          <input
+            type="number"
+            name="rollNo"
+            placeholder="Enter Roll Number..."
+            class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-lg font-semibold"
+          >
+            Search
+          </button>
+        </form>
+      </section>
+
+      <!-- Table of Students -->
+      <section class="max-w-5xl mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">All Students</h2>
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+          <table class="w-full table-auto text-left">
+            <thead class="bg-blue-50">
+              <tr>
+                <th class="p-4">Roll No</th>
+                <th class="p-4">Name</th>
+                <th class="p-4">Age</th>
+                <th class="p-4">Grade</th>
+                <th class="p-4">Feedback</th>
+                <th class="p-4">Score</th>
+                <th class="p-4">Passed Year</th>
+                <th class="p-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(student => { %>
+              <tr class="border-t">
+                <td class="p-4"><%= student.id %></td>
+                <td class="p-4"><%= student.name %></td>
+                <td class="p-4"><%= student.age %></td>
+                <td class="p-4"><%= student.grade %></td>
+                <td class="p-4"><%= student.feedback %></td>
+                <td class="p-4">
+                  <%= student.score ? student.score : 'N/A' %>
+                </td>
+                <td class="p-4"><%= student.passedYear %></td>
+                <td class="p-4">
+                  <form
+                    action="/delete-student/<%= student.id %>"
+                    method="POST"
+                  >
+                    <button
+                      type="submit"
+                      class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Form to Add Student -->
+      <section class="max-w-3xl mx-auto mt-12">
+        <h2 class="text-2xl font-semibold mb-4">Add New Student</h2>
+        <form
+          action="/submit-student"
+          method="POST"
+          class="space-y-6 bg-white p-8 rounded-lg shadow-md"
+        >
+          <div class="flex flex-col">
+            <label for="rollNo" class="mb-1 font-semibold">Roll Number</label>
+            <input
+              type="number"
+              id="rollNo"
+              name="rollNo"
+              required
+              class="p-3 border rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="name" class="mb-1 font-semibold">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="p-3 border rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="age" class="mb-1 font-semibold">Age</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              required
+              class="p-3 border rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="feedback" class="mb-1 font-semibold"
+              >Feedback about School</label
+            >
+            <textarea
+              id="feedback"
+              name="feedback"
+              required
+              class="p-3 border rounded-lg"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="grade" class="mb-1 font-semibold">Grade</label>
+            <select
+              id="grade"
+              name="grade"
+              required
+              class="p-3 border rounded-lg"
+            >
+              <option value="10">10th</option>
+              <option value="12">12th</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="score" class="mb-1 font-semibold"
+              >Score (only for 12th students)</label
+            >
+            <input
+              type="number"
+              id="score"
+              name="score"
+              class="p-3 border rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="passedYear" class="mb-1 font-semibold"
+              >Passed-out Year</label
+            >
+            <input
+              type="number"
+              id="passedYear"
+              name="passedYear"
+              required
+              class="p-3 border rounded-lg"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold"
+          >
+            Submit Student
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center p-4">
+      <p>&copy; 2025 Student Portal. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+
